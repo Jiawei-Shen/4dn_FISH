@@ -19,37 +19,39 @@ def main():
     optional.add_argument('--cell', type=str, help='This OPTIONAL table is used to document properties that are globally associated with individual Cells')
     conditional.add_argument('--subcell', type=str, help='This CONDITIONALLY REQUIRED table is used to document properties that are globally associated with individual sub-cellular ROIs that typically correspond to sub-nuclear features')
     conditional.add_argument('--extracell', type=str, help='This CONDITIONALLY REQUIRED table is used to document properties that are globally associated with individual extracellular structures')
-    conditional.add_argument('--mapping', type=str, help='This table is used to provide the boundaries of cells and other ROIs identified as part of this experiment. CONDITIONALLY REQUIRED if --subcell, -cell, and/or -extracell tables are provided')
+    conditional.add_argument('--mapping', type=str, help='This table is used to provide the boundaries of cells and other ROIs identified as part of this experiment. CONDITIONALLY REQUIRED if --subcell, --cell, and/or --extracell tables are provided')
 
     args = parser.parse_args()
 
+    # Conditional requirement checks
     if args.cell and args.subcell is None:
         parser.error("--subcell is required if --cell is provided")
 
     if args.cell and args.extracell is None:
         parser.error("--extracell is required if --cell is provided")
 
-    if args.subcell and args.mapping is None or args.extracell and args.mapping is None or args.cell and args.mapping is None:
-        parser.error("--mapping is required if --subcell, --extracell or --cell is provided")
+    if (args.subcell or args.extracell or args.cell) and args.mapping is None:
+        parser.error("--mapping is required if --subcell, --extracell, or --cell is provided")
 
+    # Collect the provided arguments into a dictionary
     file_dictionary = {'core': args.core}
-    if args.rna != None:
+    if args.rna is not None:
         file_dictionary['rna'] = args.rna
-    if args.quality != None:
+    if args.quality is not None:
         file_dictionary['quality'] = args.quality
-    if args.bio != None:
+    if args.bio is not None:
         file_dictionary['bio'] = args.bio
-    if args.demultiplexing != None:
+    if args.demultiplexing is not None:
         file_dictionary['demultiplexing'] = args.demultiplexing
-    if args.trace != None:
+    if args.trace is not None:
         file_dictionary['trace'] = args.trace
-    if args.cell != None:
+    if args.cell is not None:
         file_dictionary['cell'] = args.cell
-    if args.subcell != None:
+    if args.subcell is not None:
         file_dictionary['subcell'] = args.subcell
-    if args.extracell != None:
+    if args.extracell is not None:
         file_dictionary['extracell'] = args.extracell
-    if args.mapping != None:
+    if args.mapping is not None:
         file_dictionary['mapping'] = args.mapping
 
     print(file_dictionary)
