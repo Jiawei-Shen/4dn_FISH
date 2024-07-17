@@ -1,5 +1,5 @@
-Required Arguments:
-  arguments that must be given
+#Required Arguments:
+###arguments that must be given
 
   --core CORE           This is the MANDATORY core table of the 4DN FISH-omics
                         Format for Chromatin Tracing
