@@ -47,4 +47,10 @@ These are the arguments available. All arguments below take a path as an argumen
 ####  --cell CELL           
                         This OPTIONAL table is used to document properties
                         that are globally associated with individual Cells
+### Examples:
+#### Succesful running
+##### _Input_
+                        python inputs.py --core /Users/johndoe/Downloads/core.csv --rna /Users/johndoe/Downloads/rna.csv
+##### _Output_
+                        {'core': '/Users/johndoe/Downloads/core.csv', 'rna': '/Users/johndoe/Downloads/rna.csv'}
 ## Sorting the csv.files
