@@ -20,7 +20,7 @@ def main():
     conditional.add_argument('--subcell', type=str, help='This CONDITIONALLY REQUIRED table is used to document properties that are globally associated with individual sub-cellular ROIs that typically correspond to sub-nuclear features')
     conditional.add_argument('--extracell', type=str, help='This CONDITIONALLY REQUIRED table is used to document properties that are globally associated with individual extracellular structures')
     conditional.add_argument('--mapping', type=str, help='This table is used to provide the boundaries of cells and other ROIs identified as part of this experiment. CONDITIONALLY REQUIRED if --subcell, --cell, and/or --extracell tables are provided')
-
+    
     args = parser.parse_args()
 
     # Conditional requirement checks
@@ -58,3 +58,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
