@@ -42,16 +42,16 @@ def main():
     sorts = parser.add_argument_group("Arguments for sorting files")
 
     # add the arguments
-    inputs.add_argument('--core', type=str, required=True, help='[path] This is the path input for the DNA-Spot/Trace Data core table')
-    inputs.add_argument('--rna', type=str, help='[path] This is the path input for the RNA-Spot Data table')
-    inputs.add_argument('--quality', type=str, help='[path] This is the path input for the Spot Quality table')
-    inputs.add_argument('--bio', type=str, help='[path] This is the path input for the Spot Biological Data table')
-    inputs.add_argument('--demultiplexing', type=str, help='[path] This is the path input for the Spot Demultiplexing table')
-    inputs.add_argument('--trace', type=str, help='[path] This is the path input for the Trace Data table')
-    inputs.add_argument('--cell', type=str, help='[path] This is the path input for the Cell Data table')
-    inputs.add_argument('--subcell', type=str, help='[path] This is the path input for the Sub-Cell ROI Data table')
-    inputs.add_argument('--extracell', type=str, help='[path] This is the path input for the Extra-Cell ROI Data table')
-    inputs.add_argument('--mapping', type=str, help='[path] This is the path input for the Cell/ROI Mapping table')
+    inputs.add_argument('--core', type=str, required=True, help='[path] Path input for the DNA-Spot/Trace Data core table')
+    inputs.add_argument('--rna', type=str, help='[path] Path input for the RNA-Spot Data table')
+    inputs.add_argument('--quality', type=str, help='[path] Path input for the Spot Quality table')
+    inputs.add_argument('--bio', type=str, help='[path] Path input for the Spot Biological Data table')
+    inputs.add_argument('--demultiplexing', type=str, help='[path] Path input for the Spot Demultiplexing table')
+    inputs.add_argument('--trace', type=str, help='[path] Path input for the Trace Data table')
+    inputs.add_argument('--cell', type=str, help='[path] Path input for the Cell Data table')
+    inputs.add_argument('--subcell', type=str, help='[path] Path input for the Sub-Cell ROI Data table')
+    inputs.add_argument('--extracell', type=str, help='[path] Path input for the Extra-Cell ROI Data table')
+    inputs.add_argument('--mapping', type=str, help='[path] Path input for the Cell/ROI Mapping table')
     
     # sort arguments
     sorts.add_argument('--sort_core', default = 'Spot_ID', type=str, help='[str] Takes the name of a column of the core table. Default: Spot_ID')
