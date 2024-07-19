@@ -53,4 +53,10 @@ These are the arguments available. All arguments below take a path as an argumen
                         python inputs.py --core /Users/johndoe/Downloads/core.csv --rna /Users/johndoe/Downloads/rna.csv
 ##### _Output_
                         {'core': '/Users/johndoe/Downloads/core.csv', 'rna': '/Users/johndoe/Downloads/rna.csv'}
+#### File Error
+##### _Input_
+                        python inputs.py --core /Users/johndoe/Downloads/thisisnotafile.csv
+##### _Output_
+                        inputs.py: error: The file /Users/johndoe/Downloads/thisisnotafile.csv does not exist
+
 ## Sorting the csv.files
