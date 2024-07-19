@@ -63,14 +63,13 @@ These are the arguments available. All arguments below take a path as an argumen
 ##### Sorting format: --sort_[file you want to sort] [column_name]
 ##### Example:
                         --sort_core Chrom_Start
-> [!NOTE]
-> You may only input one column name.
-
+### Constraints
+* You may only input one column name
+* You may only sort a file by a column if that file is provided using the input argument (see above)
+* Column names are case sensitive, so `spot_id` and `Spot_ID` will be interpreted differently by the computer
 > [!IMPORTANT]
-> You may not input a column name that does not exist in the file will be sorted.
-
-> [!CAUTION]
-> You may only sort a file by a column if that file is provided using the input argument (see above).
+> You may not input a column name that does not exist in a file.
+> The following error will pop up: `error: The column column is not contained within file_path`
 ### Possible Arguments
 #### --sort_core
                         Input = [str] name of column. Sorts the core table by the column provided
