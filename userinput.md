@@ -70,8 +70,8 @@ These are the arguments available. All arguments below take a path as an argumen
 * You may only sort a file by a column if that file is provided using the input argument (see above)
 * Column names are case sensitive, so `spot_id` and `Spot_ID` will be interpreted differently by the computer
 > [!IMPORTANT]
-> You may not input a column name that does not exist in a file.
-> The following error will pop up: `error: The column column is not contained within file_path`
+> You cannot input an argument to sort by a column in a file that does not exist.
+> The following error will pop up: `error: The column [column] is not contained within file_path`
 ### Possible Arguments
 #### --sort_core
                         Input = [str] name of column. Sorts the core table by the column provided
