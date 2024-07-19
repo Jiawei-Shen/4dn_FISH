@@ -47,6 +47,8 @@ These are the arguments available. All arguments below take a path as an argumen
 ####  --cell           
                         This OPTIONAL table is used to document properties
                         that are globally associated with individual Cells
+> [!TIP]
+> The order that you input arguments do not matter. For example, `--core [file] --rna [file]` will function the same as `--rna [file] --core [file]`
 ### Examples:
 #### Succesful running
 ##### _Input_
