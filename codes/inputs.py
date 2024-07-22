@@ -12,9 +12,9 @@ def column_exists(file_path, column):
         return False
 
 def csvfile_exists(file):
-    if not os.path.isfile(file):
-        return False
-    return True
+    if os.path.isfile(file):
+        return True
+    return False
     
 def add_to_input_dictionary(parser, key, file, dictionary):
     if file is not None:
@@ -36,7 +36,7 @@ def update_sort_list(list):
     return list[0], list[1], list[2], list[3], list[4], list[5], list[6], list[7], list[8], list[9]
 
 def main():
-    parser = argparse.ArgumentParser(description="For more detailed help, go to [link]")
+    parser = argparse.ArgumentParser(description="For more detailed help, go to https://github.com/Jiawei-Shen/4dn_FISH/blob/Dev/userinput.md")
 
     inputs = parser.add_argument_group("Arguments for inputting files")
     sorts = parser.add_argument_group("Arguments for sorting files")
@@ -62,7 +62,7 @@ def main():
     sorts.add_argument('--sort_trace', default = 'Trace_ID', type=str, help='[str] Takes the name of a column of the trace table. Default: Trace_ID')
     sorts.add_argument('--sort_cell', default = 'Cell_ID', type=str, help='[str] Takes the name of a column of the cell table. Default: Cell_ID')
     sorts.add_argument('--sort_subcell', default = 'Sub_Cell_ROI_ID', type=str, help='[str] Takes the name of a column of the subcell table. Default: Sub_Cell_ROI_ID')
-    sorts.add_argument('--sort_extracell', default = 'Extra_Cell_ROI', type=str, help='[str] Takes the name of a column of the extracell table. Default: Extra_Cell_ROI')
+    sorts.add_argument('--sort_extracell', default = 'Extra_Cell_ROI_ID', type=str, help='[str] Takes the name of a column of the extracell table. Default: Extra_Cell_ROI')
     sorts.add_argument('--sort_mapping', default = None, type=str, help='[str] Takes the name of a column of the mapping table. Default: None')
 
     args = parser.parse_args()
@@ -76,6 +76,7 @@ def main():
 
     if (args.subcell or args.extracell or args.cell) and args.mapping is None:
         parser.error("--mapping is required if --subcell, --extracell, or --cell is provided")
+
 
     # Makes sure that the user can only sort if the file that they want to sort is provided as well
     input_list = [args.core, args.rna, args.quality, args.bio, args.demultiplexing, args.trace, args.cell, args.subcell, args.extracell, args.mapping]
