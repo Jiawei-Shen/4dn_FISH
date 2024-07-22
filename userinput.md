@@ -67,29 +67,42 @@ These are the arguments available. All arguments below take a path as an argumen
                         --sort_core Chrom_Start
 ### Constraints
 * You may only input one column name
-* You may only sort a file by a column if that file is provided using the input argument (see above)
+* You may only sort a file by a column if that file is provided using the input argument (see above).
 * Column names are case sensitive, so `spot_id` and `Spot_ID` will be interpreted differently by the computer
 > [!IMPORTANT]
 > You cannot input an argument to sort by a column in a file that does not exist.
 > The following error will pop up: `error: The column [column] is not contained within file_path`
+>
+##### If no sort argument is inputted, a default column will be used to sort.
 ### Possible Arguments
 #### --sort_core
-                        Input = [str] name of column. Sorts the core table by the column provided
+                        Input = [str] -> name of column. Sorts the core table by the column provided.
+                        Default = Spot_ID.
 #### --sort_rna
-                        Input = [str] name of column. Sorts the rna table by the column provided
+                        Input = [str] -> name of column. Sorts the rna table by the column provided.
+                        Default = Spot_ID.
 #### --sort_quality
-                        Input = [str] name of column. Sorts the quality table by the column provided
+                        Input = [str] -> name of column. Sorts the quality table by the column provided.
+                        Default = Spot_ID.
 #### --sort_bio
-                        Input = [str] name of column. Sorts the bio table by the column provided
+                        Input = [str] -> name of column. Sorts the bio table by the column provided.
+                        Default = Spot_ID.
 #### --sort_demultiplexing
-                        Input = [str] name of column. Sorts the demultiplexing table by the column provided
+                        Input = [str] -> name of column. Sorts the demultiplexing table by the column provided.
+                        Default = Loc_ID.
 #### --sort_trace
-                        Input = [str] name of column. Sorts the trace table by the column provided
+                        Input = [str] -> name of column. Sorts the trace table by the column provided.
+                        Default = Trace_ID.
 #### --sort_cell
-                        Input = [str] name of column. Sorts the cell table by the column provided
+                        Input = [str] -> name of column. Sorts the cell table by the column provided.
+                        Default = Cell_ID.
 #### --sort_subcell
-                        Input = [str] name of column. Sorts the subcell table by the column provided.
+                        Input = [str] -> name of column. Sorts the subcell table by the column provided.
+                        Default = Sub_Cell_ROI_ID.
 #### --sort_extracell
-                        Input = [str] name of column. Sorts the extracell table by the column provided
+                        Input = [str] -> name of column. Sorts the extracell table by the column provided.
+                        Default = Extra_Cell_ROI_ID.
 #### --sort_mapping
-                        Input = [str] name of column. Sorts the mapping table by the column provided
+                        Input = [str] -> name of column. Sorts the mapping table by the column provided.
+                        Default = Cell_ID/Sub_Cell_ROI_ID/Extra_Cell_ROI_ID. The mapping table can be organized
+                        with three columns, so the default column will depend on the table.
