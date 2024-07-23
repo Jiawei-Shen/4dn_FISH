@@ -35,12 +35,23 @@ def add_to_sort_dictionary(parser, file, key, column, dictionary):
 def update_sort_list(list):
     return list[0], list[1], list[2], list[3], list[4], list[5], list[6], list[7], list[8], list[9]
 
+def find_default_mapping_column(file):
+    columns = ""
+    with open(file, mode='r', newline='') as file:
+        reader = csv.reader(file)
+        for row_num, row in enumerate(reader, start=1):
+            for col_num, cell in enumerate(row, start=1):
+                if "columns" in cell:
+                    columns = cell
+                    break
+        return columns[11:].split(",")[0]
+
 def main():
     parser = argparse.ArgumentParser(description="For more detailed help, go to https://github.com/Jiawei-Shen/4dn_FISH/blob/Dev/userinput.md")
 
     inputs = parser.add_argument_group("Arguments for inputting files")
     sorts = parser.add_argument_group("Arguments for sorting files")
-
+    
     # add the arguments
     inputs.add_argument('--core', type=str, required=True, help='[path] Path input for the DNA-Spot/Trace Data core table')
     inputs.add_argument('--rna', type=str, help='[path] Path input for the RNA-Spot Data table')
@@ -62,8 +73,9 @@ def main():
     sorts.add_argument('--sort_trace', default = 'Trace_ID', type=str, help='[str] Takes the name of a column of the trace table. Default: Trace_ID')
     sorts.add_argument('--sort_cell', default = 'Cell_ID', type=str, help='[str] Takes the name of a column of the cell table. Default: Cell_ID')
     sorts.add_argument('--sort_subcell', default = 'Sub_Cell_ROI_ID', type=str, help='[str] Takes the name of a column of the subcell table. Default: Sub_Cell_ROI_ID')
-    sorts.add_argument('--sort_extracell', default = 'Extra_Cell_ROI_ID', type=str, help='[str] Takes the name of a column of the extracell table. Default: Extra_Cell_ROI')
-    sorts.add_argument('--sort_mapping', default = None, type=str, help='[str] Takes the name of a column of the mapping table. Default: None')
+    sorts.add_argument('--sort_extracell', default = 'Extra_Cell_ROI_ID', type=str, help='[str] Takes the name of a column of the extracell table. Default: Extra_Cell_ROI_ID')
+    # mapping has three possible first columns
+    sorts.add_argument('--sort_mapping', default = None, type=str, help='[str] Takes the name of a column of the mapping table. Default: Cell_ID/Sub_Cell_ROI_ID/Extra_Cell_ROI_ID')
 
     args = parser.parse_args()
 
@@ -77,6 +89,8 @@ def main():
     if (args.subcell or args.extracell or args.cell) and args.mapping is None:
         parser.error("--mapping is required if --subcell, --extracell, or --cell is provided")
 
+    if args.mapping != None and args.sort_mapping == None:
+        args.sort_mapping = find_default_mapping_column(args.mapping)
 
     # Makes sure that the user can only sort if the file that they want to sort is provided as well
     input_list = [args.core, args.rna, args.quality, args.bio, args.demultiplexing, args.trace, args.cell, args.subcell, args.extracell, args.mapping]
@@ -117,6 +131,6 @@ def main():
     print(file_dictionary)
     print(sort_dictionary)
 
+
 if __name__ == "__main__":
     main()
-    
