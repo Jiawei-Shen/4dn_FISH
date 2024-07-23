@@ -1,15 +1,22 @@
 import argparse
 import os
 import csv
-
-def column_exists(file_path, column):
-    with open(file_path, mode='r', newline='') as file:
-        reader = csv.reader(file)
-        for row_num, row in enumerate(reader, start=1):
-            for col_num, cell in enumerate(row, start=1):
-                if column in cell:
-                    return True
-        return False
+import re
+    
+def get_column_names(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            last_header = None
+            for line in reversed(lines):
+                if line.startswith('##columns'):
+                    match = re.search(r'\(([^)]+)\)', line.strip())
+                    if match:
+                        last_header = match.group(1).split(',')
+                    break
+        return last_header
+    except Exception as e:
+        return f"An unexpected error occurred: {e}"
 
 def csvfile_exists(file):
     if os.path.isfile(file):
@@ -26,56 +33,91 @@ def add_to_input_dictionary(parser, key, file, dictionary):
 
 def add_to_sort_dictionary(parser, file, key, column, dictionary):
     if column is not None:
-        if column_exists(file, column):
+        column_list = get_column_names(file)
+        if column in column_list:
             dictionary[key] = column
             return dictionary
         else:
             parser.error(f"The column {column} is not contained within {file}")
 
-def update_sort_list(list):
-    return list[0], list[1], list[2], list[3], list[4], list[5], list[6], list[7], list[8], list[9]
-
-def find_default_mapping_column(file):
-    columns = ""
-    with open(file, mode='r', newline='') as file:
-        reader = csv.reader(file)
-        for row_num, row in enumerate(reader, start=1):
-            for col_num, cell in enumerate(row, start=1):
-                if "columns" in cell:
-                    columns = cell
+def count_hash_lines_and_get_column_header(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            hash_lines_count = sum(1 for line in lines if line.startswith('#'))
+            last_header = None
+            for line in reversed(lines):
+                if line.startswith('##columns'):
+                    match = re.search(r'\(([^)]+)\)', line.strip())
+                    if match:
+                        last_header = match.group(1).split(',')
                     break
-        return columns[11:].split(",")[0]
+        return hash_lines_count, last_header
+    except Exception as e:
+        return f"An unexpected error occurred: {e}"
 
 def main():
-    parser = argparse.ArgumentParser(description="For more detailed help, go to https://github.com/Jiawei-Shen/4dn_FISH/blob/Dev/userinput.md")
+    epilog = """\
+Arguments for inputting files:
+Argument format: --[short_name] [file_path]
 
-    inputs = parser.add_argument_group("Arguments for inputting files")
-    sorts = parser.add_argument_group("Arguments for sorting files")
-    
+  [short_name] -> The short name for the file to input
+  Possible short_names: --core, --rna, --quality, --bio, --demultiplexing, --trace, --cell, --subcell, --extracell, --mapping
+  [file_path] -> Path of the file that is being inputted
+For each file that you want to parse, you must add a new argument
+
+Example Argument:
+  --core core.path --trace trace.path
+
+Arguments for sorting files:
+Argument format: --[sort_short_name] [column_name]
+  
+  [sort_short_name] -> Name of argument, in the format of --sort_[blank]
+  Possible sort_short_names:", help="--sort_core, --sort_rna, sort_quality, --sort_bio, --sort_demultiplexing, --sort_trace, --sort_cell, --sort_subcell, --sort_extracell, --sort_mapping
+  [column_name] -> name of the column that is user is requesting to sort by
+  For each file you want to sort, you must use a new argument
+
+Example Argument:
+    --sort_core Spot_ID --sort_trace FOV
+
+Other Arguments
+--text TEXT      [str] Space to add any additional comments
+--clevel CLEVEL  [int] Compress level of files. A higher level means smaller size of the compressed file, but it takes a longer time to compress. Range = 1 to 9
+
+
+"""
+    parser = argparse.ArgumentParser(description="For more detailed help, go to https://github.com/Jiawei-Shen/4dn_FISH/blob/Dev/userinput.md", epilog = epilog, formatter_class=argparse.RawDescriptionHelpFormatter, usage=argparse.SUPPRESS)
+
     # add the arguments
-    inputs.add_argument('--core', type=str, required=True, help='[path] Path input for the DNA-Spot/Trace Data core table')
-    inputs.add_argument('--rna', type=str, help='[path] Path input for the RNA-Spot Data table')
-    inputs.add_argument('--quality', type=str, help='[path] Path input for the Spot Quality table')
-    inputs.add_argument('--bio', type=str, help='[path] Path input for the Spot Biological Data table')
-    inputs.add_argument('--demultiplexing', type=str, help='[path] Path input for the Spot Demultiplexing table')
-    inputs.add_argument('--trace', type=str, help='[path] Path input for the Trace Data table')
-    inputs.add_argument('--cell', type=str, help='[path] Path input for the Cell Data table')
-    inputs.add_argument('--subcell', type=str, help='[path] Path input for the Sub-Cell ROI Data table')
-    inputs.add_argument('--extracell', type=str, help='[path] Path input for the Extra-Cell ROI Data table')
-    inputs.add_argument('--mapping', type=str, help='[path] Path input for the Cell/ROI Mapping table')
+    parser.add_argument('--core', type=str, required=True, help=argparse.SUPPRESS)
+    parser.add_argument('--rna', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--quality', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--bio', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--demultiplexing', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--trace', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--cell', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--subcell', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--extracell', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--mapping', type=str, help=argparse.SUPPRESS)
     
     # sort arguments
-    sorts.add_argument('--sort_core', default = 'Spot_ID', type=str, help='[str] Takes the name of a column of the core table. Default: Spot_ID')
-    sorts.add_argument('--sort_rna', default = 'Spot_ID', type=str, help='[str] Takes the name of a column of the rna table. Default: Spot_ID')
-    sorts.add_argument('--sort_quality', default = 'Spot_ID', type=str, help='[str] Takes the name of a column of the quality table. Default: Spot_ID')
-    sorts.add_argument('--sort_bio', default = 'Spot_ID', type=str, help='[str] Takes the name of a column of the bio table. Default: Spot_ID')
-    sorts.add_argument('--sort_demultiplexing', default = 'Loc_ID', type=str, help='[str] Takes the name of a column of the demultiplexing table. Default: Loc_ID')
-    sorts.add_argument('--sort_trace', default = 'Trace_ID', type=str, help='[str] Takes the name of a column of the trace table. Default: Trace_ID')
-    sorts.add_argument('--sort_cell', default = 'Cell_ID', type=str, help='[str] Takes the name of a column of the cell table. Default: Cell_ID')
-    sorts.add_argument('--sort_subcell', default = 'Sub_Cell_ROI_ID', type=str, help='[str] Takes the name of a column of the subcell table. Default: Sub_Cell_ROI_ID')
-    sorts.add_argument('--sort_extracell', default = 'Extra_Cell_ROI_ID', type=str, help='[str] Takes the name of a column of the extracell table. Default: Extra_Cell_ROI_ID')
+    parser.add_argument('--sort_core', default = 'Spot_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_rna', default = 'Spot_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_quality', default = 'Spot_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_bio', default = 'Spot_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_demultiplexing', default = 'Loc_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_trace', default = 'Trace_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_cell', default = 'Cell_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_subcell', default = 'Sub_Cell_ROI_ID', type=str, help=argparse.SUPPRESS)
+    parser.add_argument('--sort_extracell', default = 'Extra_Cell_ROI_ID', type=str, help=argparse.SUPPRESS)
     # mapping has three possible first columns
-    sorts.add_argument('--sort_mapping', default = None, type=str, help='[str] Takes the name of a column of the mapping table. Default: Cell_ID/Sub_Cell_ROI_ID/Extra_Cell_ROI_ID')
+    parser.add_argument('--sort_mapping', default = None, type=str, help=argparse.SUPPRESS)
+
+    # text argument
+    parser.add_argument("--text", default = "None", type=str, help=argparse.SUPPRESS)
+
+    # compress level argument
+    parser.add_argument("--clevel", default = 6, type=int, help=argparse.SUPPRESS)
 
     args = parser.parse_args()
 
@@ -89,8 +131,13 @@ def main():
     if (args.subcell or args.extracell or args.cell) and args.mapping is None:
         parser.error("--mapping is required if --subcell, --extracell, or --cell is provided")
 
+    # Find the default mapping column if needed
     if args.mapping != None and args.sort_mapping == None:
-        args.sort_mapping = find_default_mapping_column(args.mapping)
+        linenum, column_list = count_hash_lines_and_get_column_header(args.mapping)
+        args.sort_mapping = column_list[0]
+
+    if args.clevel > 9 or args.clevel < 1:
+        parser.error("--text must be in range of 1 to 9")
 
     # Makes sure that the user can only sort if the file that they want to sort is provided as well
     input_list = [args.core, args.rna, args.quality, args.bio, args.demultiplexing, args.trace, args.cell, args.subcell, args.extracell, args.mapping]
@@ -98,7 +145,7 @@ def main():
     for i in range(10):
         if input_list[i] is None:
             sort_list[i] = None
-    args.sort_core, args.sort_rna, args.sort_quality, args.sort_bio, args.sort_demultiplexing, args.sort_trace, args.sort_cell, args.sort_subcell, args.sort_extracell, args.sort_mapping = update_sort_list(sort_list)
+    args.sort_core, args.sort_rna, args.sort_quality, args.sort_bio, args.sort_demultiplexing, args.sort_trace, args.sort_cell, args.sort_subcell, args.sort_extracell, args.sort_mapping = sort_list[0], sort_list[1], sort_list[2], sort_list[3], sort_list[4], sort_list[5], sort_list[6], sort_list[7], sort_list[8], sort_list[9]
     
     # Read info into dictionaries
     file_dictionary = {}
@@ -128,8 +175,11 @@ def main():
     add_to_sort_dictionary(parser, args.extracell, 'sort_extracell', args.sort_extracell, sort_dictionary)
     add_to_sort_dictionary(parser, args.mapping, 'sort_mapping', args.sort_mapping, sort_dictionary)
     
+    # Print results
     print(file_dictionary)
     print(sort_dictionary)
+    print("Text: " + args.text)
+    print("Compress level: " + str(args.clevel))
 
 
 if __name__ == "__main__":
