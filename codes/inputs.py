@@ -57,7 +57,7 @@ def count_hash_lines_and_get_column_header(file_path):
         return f"An unexpected error occurred: {e}"
 
 def main():
-    epilog = """\
+    description = """\
 Arguments for inputting files:
 Argument format: --[short_name] [file_path]
 
@@ -86,7 +86,7 @@ Other Arguments
 
 
 """
-    parser = argparse.ArgumentParser(description="For more detailed help, go to https://github.com/Jiawei-Shen/4dn_FISH/blob/Dev/userinput.md", epilog = epilog, formatter_class=argparse.RawDescriptionHelpFormatter, usage=argparse.SUPPRESS)
+    parser = argparse.ArgumentParser(description=description, epilog = "For more detailed help, go to https://github.com/Jiawei-Shen/4dn_FISH/blob/Dev/userinput.md", formatter_class=argparse.RawDescriptionHelpFormatter, usage=argparse.SUPPRESS)
 
     # add the arguments
     parser.add_argument('--core', type=str, required=True, help=argparse.SUPPRESS)
