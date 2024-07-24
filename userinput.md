@@ -106,3 +106,19 @@ These are the arguments available. All arguments below take a path as an argumen
                         Input = [str] -> name of column. Sorts the mapping table by the column provided.
                         Default = Cell_ID/Sub_Cell_ROI_ID/Extra_Cell_ROI_ID. The mapping table can be organized
                         with three columns, so the default column will depend on the table.
+## Other Parser Arguments
+### Text
+--text offers a space to add any additional comments, specifications, or clarifications. --text takes in strings, and there is no character limit.
+> [!WARNING]
+> Place your comment within quotations (' ' or " ")
+> 
+Example: `--text 'this is my comment'`
+
+
+### Compress level
+Format -> `--clevel [int]`
+--clevel takes an integer value between 1 and 9. The defualt compress level is 6.
+| Low compress level      | High compress level      |
+| ----------------------- | ------------------------ |
+|    Larger file size     |    Smaller file size     |
+| Longer compressing time | Shorter compressing time |
