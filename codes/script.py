@@ -34,7 +34,7 @@ def add_to_input_dictionary(parser, key, file, dictionary):
 def add_to_sort_dictionary(parser, file, key, column, dictionary):
     if column is not None:
         column_list = get_column_names(file)
-        if column in column_list:
+        if column in column_list or " " + column in column_list:
             dictionary[key] = column
             return dictionary
         else:
