@@ -114,7 +114,7 @@ Other Arguments
     parser.add_argument('--sort_mapping', default = None, type=str, help=argparse.SUPPRESS)
 
     # text argument
-    parser.add_argument("--text", default = "None", type=str, help=argparse.SUPPRESS)
+    parser.add_argument("--text", default = None, type=str, help=argparse.SUPPRESS)
 
     # compress level argument
     parser.add_argument("--clevel", default = 6, type=int, help=argparse.SUPPRESS)
@@ -137,7 +137,7 @@ Other Arguments
         args.sort_mapping = column_list[0]
 
     if args.clevel > 9 or args.clevel < 1:
-        parser.error("--text must be in range of 1 to 9")
+        parser.error("--clevel must be in range of 1 to 9")
 
     # Makes sure that the user can only sort if the file that they want to sort is provided as well
     input_list = [args.core, args.rna, args.quality, args.bio, args.demultiplexing, args.trace, args.cell, args.subcell, args.extracell, args.mapping]
@@ -178,7 +178,7 @@ Other Arguments
     # Print results
     print(file_dictionary)
     print(sort_dictionary)
-    print("Text: " + args.text)
+    print("Text: " + str(args.text))
     print("Compress level: " + str(args.clevel))
 
 
