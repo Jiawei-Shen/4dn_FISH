@@ -1,6 +1,5 @@
 import argparse
 import os
-import csv
 import re
     
 def get_column_names(file_path):
