@@ -47,6 +47,15 @@
   justify-content:left;
 }
 
+.plotly-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* or any percentage or fixed size */
+  height: 100%; /* or any percentage or fixed size */
+  overflow: auto;
+}
+
 button {
   padding: 10px 20px;
   font-size: 16px;
