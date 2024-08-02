@@ -1,0 +1,15 @@
+/* src/Button.css */
+
+.custom-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .custom-button:hover {
+    opacity: 0.8;
+  }
+  
