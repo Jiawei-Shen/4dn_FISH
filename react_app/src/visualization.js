@@ -1,6 +1,6 @@
 // src/components/Visualization.js
 import React from 'react';
-import MyPlot from './plotly3d';
+import MyPlot from './fishVizPlot';
 
 const Visualization = () => {
   return (
