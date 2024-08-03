@@ -2,7 +2,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-function getrandom(num , mul) 
+function getrandom(num , mul) // takes in the number of dots you want, and the range of the data(0*mul,1*mul)
 	{
    var value = [ ];
    for(let i=0;i<=num;i++)
@@ -10,52 +10,49 @@ function getrandom(num , mul)
     var rand = Math.random() * mul;
     value.push(rand);
    }
-   return value;
+   return value;  // Returns a LIST
   }
 
 var data=[
     {
-     name: 'chr1',
+     name: 'trace 1',
      opacity:0.4,
      type: 'scatter3d',
-     x: getrandom(5 , 125),
-     y: getrandom(5 , 125),
-     z: getrandom(5 , 125),
+     x: getrandom(100 , 1000000),
+     y: getrandom(100 , 1000000),
+     z: getrandom(100 , 1000000),
     },
     {
-     name: 'chr2',
+     name: 'trace 2',
      opacity:0.5,
      type: 'scatter3d',
-     x: getrandom(5 , 125),
-     y: getrandom(50 , 75),
-     z: getrandom(50 , 75),
+     x: getrandom(100 , 1000000),
+     y: getrandom(100 , 1000000),
+     z: getrandom(100 , 1000000),
     },
   	{
-     name: 'chr3',
+     name: 'trace 3',
      opacity:0.5,
      type: 'scatter3d',
-     x: getrandom(50 , 100),
-     y: getrandom(50 , 100),
-     z: getrandom(50 , 100),
+     x: getrandom(100 , 1000000),
+     y: getrandom(100 , 1000000),
+     z: getrandom(100 , 1000000),
     }
 ];
 
 var layout = {
   scene:{
-   aspectratio: {
-     x: 1, y: 1, z: 1,
-    },
    xaxis: {
     nticks: 10,
-    range: [0, 150],
+    range: [0, 1000000],
   },
    yaxis: {
     nticks: 10,
-    range: [0, 150],
+    range: [0, 1000000],
   },
    zaxis: {
    nticks: 10,
-   range: [0, 150],
+   range: [0, 1000000],
   }},
   aspectmode: "cube",
   autosize: false,
@@ -63,10 +60,10 @@ var layout = {
   height: 600,
   margin: {
     l: 0,
-	r: 0,
-	b: 50,
-	t: 50,
-	pad: 4
+	  r: 0,
+	  b: 10,
+	  t: 10,
+	  pad: 4
   },
 };
 
