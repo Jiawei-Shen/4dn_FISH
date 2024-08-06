@@ -1,4 +1,3 @@
-// src/components/Function.js
 import React, { useState } from 'react';
 import Button from './elements/Button';
 import Slider from './elements/Slider';
@@ -6,7 +5,7 @@ import SmallTextBox from './elements/SmallTextBox';
 import TextBox from './elements/TextBox';
 import Dropdown from './elements/Dropdown';
 
-const Function = () => {
+const FunctionBar = ({ onQueryResult, onDropdownValueChange, onFilterResult }) => {
   const query_options = ['Change Query Option', 'Spot_ID', 'Chrom Start', 'Trace_ID', 'Cell_ID'];
   const chromosome_options = ['Select Option', 'chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 'chr9', 'chr10', 'chr11', 'chr12', 'X', 'Y'];
   const [selectedOption, setSelectedOption] = useState(query_options[0]);
@@ -14,6 +13,7 @@ const Function = () => {
   const [startValue, setStartValue] = useState('');
   const [endValue, setEndValue] = useState('');
   const [queryResult, setQueryResult] = useState('');
+  const [filterResult, setFilterResult] = useState('')
   const [dropdownValue, setDropdownValue] = useState('');
 
   const handleTextChange = (value) => {
@@ -38,6 +38,7 @@ const Function = () => {
 
   const handleChromDropdownChange = (value) => {
     setDropdownValue(value);
+    onDropdownValueChange(value);
   };
 
   const handleQuery = () => {
@@ -83,6 +84,19 @@ const Function = () => {
         alert('No option selected');
     }
     setQueryResult(result);
+    onQueryResult(result);
+  };
+
+  const handleFilter = () => {
+    let filterResult = '';
+    if (startValue === '' || endValue === '') {
+      alert('Please enter a value for both boxes');
+    } else if (!isNaN(startValue) && !isNaN(endValue)) {
+      filterResult = `Filter Range [${startValue}, ${endValue}]`;
+    } else {
+      alert('Only integers are accepted');
+    }
+    onFilterResult(filterResult);
   };
 
   return (
@@ -120,10 +134,16 @@ const Function = () => {
 
         <Button text="Query" color="#fff" backgroundColor="#800080" onClick={handleQuery} />
         <Slider min={0} max={100} step={1} initialValue={50} onChange={handleSliderChange} />
-        <p>Query: {dropdownValue} {queryResult}</p>
+        <h3>Filter</h3>
+        <div className="filter_range">
+          <SmallTextBox placeholder="0" onChange={handleStartChange} />
+          <p> to </p>
+          <SmallTextBox placeholder="1000000" onChange={handleEndChange} />
+        </div>
+        <Button text="Filter" color="#fff" backgroundColor="#6495ED" onClick={handleFilter} />
       </div>
     </div>
   );
 };
 
-export default Function;
+export default FunctionBar;

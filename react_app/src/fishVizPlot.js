@@ -44,7 +44,7 @@ var layout = {
   scene:{
    xaxis: {
     nticks: 10,
-    range: [0, 1000000],
+    range: [0, 1000000], // 1000000
   },
    yaxis: {
     nticks: 10,

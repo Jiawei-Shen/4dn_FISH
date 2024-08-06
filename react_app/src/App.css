@@ -35,6 +35,12 @@
   gap: 10px;
 }
 
+.filter_range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .spot_id {
   display: flex;
   align-items: center;
