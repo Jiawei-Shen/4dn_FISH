@@ -1,21 +1,42 @@
-import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import React, { useState } from 'react';
+import './App.css';
 import FunctionBar from './functionbar';
 import Visualization from './visualization';
 
-const HomePage = () => {
-  return (
-    <Container sx={{ maxWidth: '90vw', paddingLeft: 0, paddingRight: 0 }}>
-      <Box display="flex" justifyContent="space-between" mt={4}>
-        <Box flex={1} maxWidth="30%" >
-          <FunctionBar />
-        </Box>
-        <Box flex={2} maxWidth="70%">
-          <Visualization />
-        </Box>
-      </Box>
-    </Container>
-  );
-};
+function App() {
+  const [queryResult, setQueryResult] = useState(''); // State for query result
+  const [filterResult, setFilterResult] = useState(''); // State for filter result
+  const [dropdownValue, setDropdownValue] = useState(''); // State for chromosome
 
-export default HomePage;
+  // Function to update query result
+  const handleQueryResult = (result) => {
+    setQueryResult(result);
+  };
+
+  // Function to update filter result
+  const handleFilterResult = (result) => {
+    setFilterResult(result);
+  };
+
+  // Function to update dropdown value
+  const handleDropdownValueChange = (value) => {
+    setDropdownValue(value);
+  };
+
+  return (
+    <div className="App">
+      <FunctionBar
+        onQueryResult={handleQueryResult}
+        onFilterResult={handleFilterResult}
+        onDropdownValueChange={handleDropdownValueChange}
+      />
+      <Visualization
+        queryResult={queryResult}
+        filterResult={filterResult}
+        dropdownValue={dropdownValue}
+      />
+    </div>
+  );
+}
+
+export default App;

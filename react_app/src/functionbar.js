@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Button from './elements/Button';
-import Slider from './elements/Slider';
 import SmallTextBox from './elements/SmallTextBox';
 import TextBox from './elements/TextBox';
 import Dropdown from './elements/Dropdown';
@@ -13,7 +12,6 @@ const FunctionBar = ({ onQueryResult, onDropdownValueChange, onFilterResult }) =
   const [startValue, setStartValue] = useState('');
   const [endValue, setEndValue] = useState('');
   const [queryResult, setQueryResult] = useState('');
-  const [filterResult, setFilterResult] = useState('')
   const [dropdownValue, setDropdownValue] = useState('');
 
   const handleTextChange = (value) => {
@@ -38,7 +36,6 @@ const FunctionBar = ({ onQueryResult, onDropdownValueChange, onFilterResult }) =
 
   const handleChromDropdownChange = (value) => {
     setDropdownValue(value);
-    onDropdownValueChange(value);
   };
 
   const handleQuery = () => {
@@ -84,7 +81,6 @@ const FunctionBar = ({ onQueryResult, onDropdownValueChange, onFilterResult }) =
         alert('No option selected');
     }
     setQueryResult(result);
-    onQueryResult(result);
   };
 
   const handleFilter = () => {
@@ -96,7 +92,6 @@ const FunctionBar = ({ onQueryResult, onDropdownValueChange, onFilterResult }) =
     } else {
       alert('Only integers are accepted');
     }
-    onFilterResult(filterResult);
   };
 
   return (
@@ -133,7 +128,6 @@ const FunctionBar = ({ onQueryResult, onDropdownValueChange, onFilterResult }) =
         )}
 
         <Button text="Query" color="#fff" backgroundColor="#800080" onClick={handleQuery} />
-        <Slider min={0} max={100} step={1} initialValue={50} onChange={handleSliderChange} />
         <h3>Filter</h3>
         <div className="filter_range">
           <SmallTextBox placeholder="0" onChange={handleStartChange} />

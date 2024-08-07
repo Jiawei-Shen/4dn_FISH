@@ -5,7 +5,7 @@
     font-size: 14px; /* Decrease the font size */
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100px; /* Set a fixed width for the text box */
+    width: 40%; /* Set a fixed width for the text box */
     box-sizing: border-box;
   }
   
