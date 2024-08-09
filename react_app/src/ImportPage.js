@@ -1,4 +1,5 @@
 // NewPage.js
+// create a text box for import as well
 import React from 'react';
 import { Container, Typography, Button } from '@mui/material';
 import FileUpload from './elements/FileUpload';
@@ -16,9 +17,6 @@ const ImportPage = () => {
         Upload Your Compressed File
       </Typography>
       <FileUpload onFileSelect={handleFileSelect} />
-      <Typography variant="body1" component="p">
-        Note: only .fish styled file formats are allowed
-      </Typography>
     </Container>
   );
 };
