@@ -121,4 +121,4 @@ Format -> `--clevel [int]`
 | Low compress level      | High compress level      |
 | ----------------------- | ------------------------ |
 |    Larger file size     |    Smaller file size     |
-| Longer compressing time | Shorter compressing time |
+| Shorter compressing time|  Longer compressing time |
