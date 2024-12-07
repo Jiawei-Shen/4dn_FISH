@@ -1,0 +1,16 @@
+/* src/Slider.css */
+
+.slider-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .slider {
+    margin-right: 10px;
+  }
+  
+  .slider-value {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  

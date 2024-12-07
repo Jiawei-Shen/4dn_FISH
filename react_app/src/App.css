@@ -1,0 +1,77 @@
+/* src/App.css */
+
+.App {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.left-column {
+  width: 200px;
+  background-color: #f0f0f0;
+  overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.scrollable-content {
+  max-height: 100%;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #ffffffb2;
+  color: black;
+}
+
+.chrom-start-end {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter_range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spot_id {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+};
+
+.header {
+  display: flex;
+  align-items:left;
+  justify-content:left;
+}
+
+.plotly-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* or any percentage or fixed size */
+  height: 100%; /* or any percentage or fixed size */
+  overflow: auto;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #000000;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #21a1f1;
+}

@@ -1,0 +1,12 @@
+/* src/TextBox.css */
+
+.text-box {
+    padding: 5px; /* Reduce padding to make the box smaller */
+    font-size: 14px; /* Decrease the font size */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 100%; /* Set a fixed width for the text box */
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+  
